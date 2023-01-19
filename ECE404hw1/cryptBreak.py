@@ -21,12 +21,12 @@
 ###
 # The decrypted output is deposited in the file `recover.txt'
 import sys
-from BitVector import *
+from BitVector import BitVector
 def cryptBreak(cipherBreakText, key_bv):
 
     PassPhrase = "Hopes and dreams of a million years"                          #(C)
 
-    BLOCKSIZE = 64                                                              #(D)
+    BLOCKSIZE = 16                                                              #(D)
     numbytes = BLOCKSIZE // 8                                                   #(E)
 
     # Reduce the passphrase to a bit array of size BLOCKSIZE:
@@ -47,11 +47,11 @@ def cryptBreak(cipherBreakText, key_bv):
     #     key = raw_input("\nEnter key: ")                                        #(N)
     # key = key.strip()                                                           #(O)
 
-    # Reduce the key to a bit array of size BLOCKSIZE:
-    key_bv = BitVector(bitlist = [0]*BLOCKSIZE)                                 #(P)
-    for i in range(0,len(key) // numbytes):                                     #(Q)
-        keyblock = key[i*numbytes:(i+1)*numbytes]                               #(R)
-        key_bv ^= BitVector( textstring = keyblock )                            #(S)
+    # # Reduce the key to a bit array of size BLOCKSIZE:
+    # key_bv = BitVector(bitlist = [0]*BLOCKSIZE)                                 #(P)
+    # for i in range(0,len(key) // numbytes):                                     #(Q)
+    #     keyblock = key[i*numbytes:(i+1)*numbytes]                               #(R)
+    #     key_bv ^= BitVector( textstring = keyblock )                            #(S)
 
     # Create a bitvector for storing the decrypted plaintext bit array:
     msg_decrypted_bv = BitVector( size = 0 )                                    #(T)
@@ -84,5 +84,7 @@ if __name__=="__main__":
         # decryptedMessage = dcryptBreak("encrypted.txt", key)
         if "Sir Lewis" in decryptedMessage:
             print("Encryption Broken!")
+            print(decryptedMessage)
+            break
         else:
             print("Not decrypted yet")
