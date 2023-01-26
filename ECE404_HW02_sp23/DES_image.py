@@ -6,23 +6,23 @@ def encrypt_image():
     roundkeys1 = generate_round_keys(key1)
     fp = open(sys.argv[1], 'rb')
     ppmHeader = None
-    # pp1 = fp.readline()
-    # pp2 = fp.readline()
-    # pp3 = fp.readline()
-    # ppmHeader = pp1 + pp2 + pp3
-    ppmHeader = fp.read()[0:14]
+    pp1 = fp.readline()
+    pp2 = fp.readline()
+    pp3 = fp.readline()
+    ppmHeader = pp1 + pp2 + pp3
+    
     fpout = open(sys.argv[3],'wb')
     fpout.write(ppmHeader)
 
-    bitVec1 = BitVector(filename = sys.argv[2])
-    while (bitVec1.more_to_read):
-        bitvec = bitVec1.read_bits_from_file( 64 )
-        if len(bitvec) > 0:
-            if (len(bitvec) != 64):
-                bitvec.pad_from_right(64-len(bitvec))
+    bitvec = BitVector(filename = sys.argv[1])
+    while (bitvec.more_to_read):
+        bitVec1 = bitvec.read_bits_from_file( 64 )
+        if len(bitVec1) > 0:
+            if (len(bitVec1)) != 64:
+                bitVec1.pad_from_right(64-len(bitVec1))
 
 
-        [LE, RE] = bitvec.divide_into_two()
+        [LE, RE] = bitVec1.divide_into_two()
         for roundkey in roundkeys1:
             newRE = RE.permute( expansion_permutation )
             out_xor = newRE ^ roundkey
@@ -34,6 +34,7 @@ def encrypt_image():
         BitVectorout = RE+LE
 
         BitVectorout.write_to_file(fpout)
+    fp.close()
     fpout.close()    
 
 
