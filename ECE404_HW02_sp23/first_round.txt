@@ -1,0 +1,8 @@
+For debugging purposes, we have listed selected outputs at various stages of DES below
+
+1. 1st block of plaintext after performing ONE round of the Feistel Structure.
+Right Block (hex): fbe1c9b9
+Left Block  (hex): 68652075
+
+2. 1st 64-bit block of the plaintext after performing ALL rounds of the Feistel Structure:
+1st Block   (hex): 36d2e582921b6b4a
