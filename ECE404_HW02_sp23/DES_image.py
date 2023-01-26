@@ -6,10 +6,11 @@ def encrypt_image():
     roundkeys1 = generate_round_keys(key1)
     fp = open(sys.argv[1], 'rb')
     ppmHeader = None
-    pp1 = fp.readline()
-    pp2 = fp.readline()
-    pp3 = fp.readline()
-    ppmHeader = pp1 + pp2 + pp3
+    # pp1 = fp.readline()
+    # pp2 = fp.readline()
+    # pp3 = fp.readline()
+    # ppmHeader = pp1 + pp2 + pp3
+    ppmHeader = fp.read()[0:14]
     fpout = open(sys.argv[3],'wb')
     fpout.write(ppmHeader)
 
