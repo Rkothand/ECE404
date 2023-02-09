@@ -1,3 +1,10 @@
+#Homework Number:3
+# Name: Rohith Kothandaraman
+# ECN Login: rkothand
+# Due Date: 2/2/2023
+
+
+
 import sys
 from BitVector import BitVector
 
