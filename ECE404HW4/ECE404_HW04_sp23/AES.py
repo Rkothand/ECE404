@@ -6,6 +6,7 @@
 
 import sys
 from BitVector import *
+from copy import deepcopy
 
 AES_modulus = BitVector(bitstring='100011011')
 subBytesTable = []                                                  # for encryption
@@ -30,9 +31,16 @@ def genTables(): #byte sustitution
         b = check if isinstance(check, BitVector) else 0
         invSubBytesTable.append(int(b))
 
-def mixColumns(array,round):
-    
-    return 
+def mixColumns(array):
+    output = deepcopy(array)
+    output = [[BitVector(intVal = x, size = 8) for x in row] for row in array]
+    for col in range(0, 4):
+        for row in range(0, 4):
+            output[row][col] = array[row][col].gf_multiply_modular(BitVector(intVal = 0x02),AES_modulus, 8)^ \
+            array[(row+1)%4][col].gf_multiply_modular(BitVector(intVal = 0x03), AES_modulus, 8) ^ \
+            array[(row+2)%4][col] ^ array[(row+3)%4][col]
+
+    return output
 
 def shiftRowsEncrypt(array):
     tempArray = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
