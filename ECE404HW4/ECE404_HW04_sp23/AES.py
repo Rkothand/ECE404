@@ -34,7 +34,7 @@ def genTables(): #byte sustitution
 def byte_substitution(state_array): #step 1
     for i in range(4):
         for j in range(4):
-            state_array[i][j] = subBytesTable[state_array[i][j]]
+            state_array[i][j] = subBytesTable[int(state_array[i][j])]
     return state_array
 
 def shiftRowsEncrypt(array): #step 2
@@ -66,16 +66,20 @@ def mix_columns(state_array): #step 3
         newStateArray[1][j] = newStateArray[1][j].intValue()
         newStateArray[2][j] = newStateArray[2][j].intValue()
         newStateArray[3][j] = newStateArray[3][j].intValue()
+    return newStateArray
 
 
-def addRoundKey(state_array, round_key, round_num): #step 4
+def addRoundKey(state_array, round_key, idx): #step 4
     tempBitVector = BitVector(size=0)
     for i in range(4):
         for j in range(4):
-            tempBitVector += BitVector(intVal=state_array[i][j], size=8)
-    
-    tempBitVector ^= round_key[round_num]
-    return tempBitVector
+            tempBitVector += BitVector(intVal=state_array[j][i], size=8)
+    print(round_key)
+    tempBitVector ^= round_key[idx]
+    for i in range(4):
+        for j in range(4):
+            stateArray[i][j] = tempBitVector[i*32 + j*8 : i*32 + j*8 + 8]
+    return stateArray
 
 def gee(keyword, round_constant, byte_sub_table):
     '''
@@ -200,26 +204,25 @@ if __name__ == "__main__":
         stateArray = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         while (bV.more_to_read):
             bitvec = bV.read_bits_from_file(128)
-            if(bitvec.length() > 0):
-                if bitvec.length() != 128:
-                    bitvec.pad_from_right(128 - bitvec.length())
-                    for i in range(4):
-                        for j in range(4):
-                            stateArray[i][j] = bitvec[i*32 + j*8 : i*32 + j*8 + 8]
-                    stateArray = addRoundKey(stateArray, round_keys[0], 0)
-                    for i in range(num_rounds-1):
-                        stateArray = byte_substitution(stateArray)
-                        stateArray = shiftRowsEncrypt(stateArray)
-                        stateArray = mix_columns(stateArray)
-                        stateArray_BV = addRoundKey(stateArray, round_keys[i],i)
-                        for j in range (4):
-                            for k in range(4):
-                              stateArray = stateArray_BV[i*32 + j*8 : i*32 + j*8 + 8].intValue()
-                        stateArray = byte_substitution(stateArray)
-                        stateArray = shiftRowsEncrypt(stateArray)
-                        stateArray = addRoundKey(stateArray, round_keys[num_rounds],14)
-                        for i in range(4):
-                            for j in range(4):
-                                out.write(stateArray[i][j].get_bitvector_in_hex())
+            if bitvec.length() != 128:
+                bitvec.pad_from_right(128 - bitvec.length())
+            for i in range(4):
+                for j in range(4):
+                    stateArray[i][j] = int(bitvec[i*32 + j*8 : i*32 + j*8 + 8])
+            stateArray = addRoundKey(stateArray, round_keys[0], 0)
+            for i in range(num_rounds-1):
+                stateArray = byte_substitution(stateArray)
+                stateArray = shiftRowsEncrypt(stateArray)
+                stateArray = mix_columns(stateArray)
+                stateArray_BV = addRoundKey(stateArray, round_keys[i], i)
+                for j in range (4):
+                    for k in range(4):
+                        stateArray[k][j] = stateArray_BV[j*32 + k*8 : j*32 + k*8 + 8]
+                stateArray = byte_substitution(stateArray)
+                stateArray = shiftRowsEncrypt(stateArray)
+                stateArray = addRoundKey(stateArray, round_keys[num_rounds], num_rounds)
+                for i in range(4):
+                    for j in range(4):
+                        out.write(stateArray[i][j].get_bitvector_in_hex())
 
-            
+        
