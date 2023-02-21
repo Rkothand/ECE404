@@ -1,0 +1,14 @@
+First plaintext block (After adding the very first round key but before the Sub Bytes step):
+321055054511060f1511000702060606
+
+First block after Sub Bytes step:
+23cafc6b6e826f76598263c5776f6f6f
+
+First block after Shift Rows step:
+2382636f6e826f6b596ffc7677ca6fc5
+
+First block after Mix Columns step:
+d7f6d65a45ab8f8989ee4f94018c37ad
+
+First block after adding Round key:
+bf93a62824c5ece0e78927fb73ff528c
