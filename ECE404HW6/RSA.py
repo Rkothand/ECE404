@@ -31,10 +31,10 @@ def RSAKeyGen(pin,qin):
     pfile = open(pin, 'w')
     qfile = open(qin, 'w')
     generator = PrimeGenerator(bits = 128)
-    p = generator.findPrime()
-    q = generator.findPrime()
-    n = p*q
-    totient = (p-1)*(q-1)
+    p=0
+    q=0
+    # n = p*q
+    # totient = (p-1)*(q-1)
     e = 65537
     bv1 = BitVector(intVal=0, size =128)
     bv2 = BitVector(intVal=0, size =128)
@@ -48,7 +48,7 @@ def RSAKeyGen(pin,qin):
             p1 = etemp1
             etemp1 = p1 % etemp1
 
-        while not bv1[0] and bv[0] and etemp1 != 1:
+        while not bv1[0] and bv2[0] and etemp1 != 1:
             p = generator.findPrime()
             ptemp = p-1
             etemp1 = e
@@ -126,8 +126,6 @@ def RSADecrypt(encryptedfile, p, q, decryptedfile):
 
 
 if __name__ == "__main__":
-
-
     if sys.argv[1] == "-e": #encryption
         input = sys.argv[2]
         output = sys.argv[5]
@@ -138,6 +136,7 @@ if __name__ == "__main__":
         q = open(qfile, "r")
         q =q.readline()
         RSAEncrypt(input,p, q, output)
+
     elif sys.argv[1] == "-d": #decryption
         input = sys.argv[2]
         output = sys.argv[5]
@@ -148,10 +147,11 @@ if __name__ == "__main__":
         q = open(qfile, "r")
         q =q.readline()
         RSADecrypt(input, p, q, output)
+
     elif sys.argv[1] == "-g": #keygen
         pfile = sys.argv[2]
-        p = open(pfile, "w")
+        # p = open(pfile, "w")
         qfile = sys.argv[3]
-        q = open(qfile, "w")
-        RSAKeyGen(p,q)
+        # q = open(qfile, "w")
+        RSAKeyGen(pfile,qfile)
 
