@@ -73,9 +73,14 @@ def RSAKeyGen(pin,qin):
 
 
 
-def RSAEncrypt(message ,p,q,encryptedfile):
+def RSAEncrypt(message ,pfile,qfile,encryptedfile):
+    p = open(pfile, "r")
+    p = p.readline()
+    q = open(qfile, "r")
+    q =q.readline() 
     p = int(p)
     q = int(q)
+    
     encryptedfile = open(encryptedfile, 'w')
     n = p*q
     totient = (p-1)*(q-1)
@@ -95,6 +100,7 @@ def RSAEncrypt(message ,p,q,encryptedfile):
 
         encryptedfile.write(publicK.get_bitvector_in_hex())
     encryptedfile.close()
+
 
 
 
@@ -126,16 +132,12 @@ def RSADecrypt(encryptedfile, p, q, decryptedfile):
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "-e": #encryption
+    if sys.argv[1] == "-e": #encryption    if sys.argv[1] == "-e": #encryption
         input = sys.argv[2]
-        output = sys.argv[5]
         pfile = sys.argv[3]  
-        p = open(pfile, "r")
-        p = p.readline()
         qfile = sys.argv[4]
-        q = open(qfile, "r")
-        q =q.readline()
-        RSAEncrypt(input,p, q, output)
+        output = sys.argv[5]
+        RSAEncrypt(input,pfile, qfile, output)
 
     elif sys.argv[1] == "-d": #decryption
         input = sys.argv[2]

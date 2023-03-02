@@ -3,11 +3,13 @@ from sys import *
 from PrimeGenerator import PrimeGenerator
 
 
-breakRSAEncrypt():
+def breakRSAEncrypt():
     # Read in the encrypted message from the file
+    return
 
-breakRSADecryption():
+def breakRSADecryption():
     # Read in the encrypted message from the file
+    return
 
 
 def RSAKeyGen(pin,qin):
