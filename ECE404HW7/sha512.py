@@ -9,6 +9,7 @@ if BitVector.__version__ < '3.2':
     sys.exit("You need BitVector module of version 3.2 or higher" )
 from BitVector import *
 
+# adapted from professors SHA256.py code that we were given
 def sha512(input, outfile):
 
     #  The 8 32-words used for initializing the 512-bit hash buffer before we start scanning the
