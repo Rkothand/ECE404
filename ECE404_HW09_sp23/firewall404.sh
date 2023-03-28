@@ -14,7 +14,7 @@ sudo iptables -t raw -F
 sudo iptables -t raw -X
 
 #only accept packets from f1.com
-sudo iptable -A INPUT -p tcp --dport 80 -s f1.com -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -s f1.com -j ACCEPT
 
 # For all outgoing packets, change their source IP address to your own machine’s IP address
 sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
@@ -31,7 +31,7 @@ sudo iptables -A INPUT -i lo -j ACCEPT
 sudo iptables -A OUTPUT -o lo -j ACCEPT
 
 # Write a port forwarding rule that routes all traffic arriving on port 8888 to port 25565
-sudo iptables -t nat -A PREROUTING -p tcp --dport 8888 -j DNAT --to-destination 25565
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8888 -j DNAT --to-destination :25565
 
 # Write a rule that only allows outgoing ssh connections to engineering.purdue.edu. You
 # will need two rules, one for the INPUT chain and one for the OUTPUT chain on the FILTER
