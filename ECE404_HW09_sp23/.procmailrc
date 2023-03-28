@@ -33,7 +33,7 @@ my404Folder
 ##
 :0 :
 * ^Subject.*sports
-/var/mail/your_special_account_name
+/var/mail/ece404m8
 
 
 
@@ -53,7 +53,7 @@ my404Folder
 ##
 :0 :
 * ^From.*(purdue\.edu[ ]|purdue\.edu>)
-!user_name@purdue.edu
+!rkothand@purdue.edu
 
 
 
