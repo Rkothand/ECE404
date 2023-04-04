@@ -117,7 +117,7 @@ char * clientComm(int clntSockfd,int * senderBuffSize_addr, int * optlen_addr){
         fprintf(stderr,"ERROR, no way to print out\n");
         exit(1);
     }    
-
+    
     strcpy(str, recvBuff);
 	
     /* send data to the client */
