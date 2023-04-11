@@ -31,7 +31,7 @@ Recipe_1
 ## applies to you
 ##
 :0
-* ^Subject:.*(College|Safe|career|diploma|professional|Degree|Masters|bu([a-z]?)y|Graduate|PhD|MBA|College|free|professional|office|affordable|cheap|expertise|promotion|job|depression|accredited|Hostway)
+* ^Subject:.*(College|Safe|professional|Degree|Masters|buy|Graduate|PhD|MBA|College|free|career|diploma|professional|office|affordable|cheap|expertise|promotion|job|depression|accredited|Hostway)
 
 Recipe_2
 
@@ -72,6 +72,7 @@ Recipe_4
 
 ## Recipe_5:
 ##
+
 ## This is another recipe from your instructor's spam filter
 
 
