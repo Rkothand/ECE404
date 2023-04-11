@@ -1,0 +1,85 @@
+SHELL=/bin/sh
+PATH=/usr/local/lib/mh:$PATH
+MAILDIR=$HOME/Mail
+LOGFILE=$HOME/Mail/logfile
+SENDMAIL=/usr/sbin/sendmail
+#VERBOSE=1
+VERBOSE=0
+EOL="
+"
+LOG="$EOL$EOL$EOL"
+LOG="New message log:$EOL"
+LOG=`perl GET_MESSAGE_INDEX`
+LOG="$EOL"
+
+
+
+## Recipe_1:
+##
+:0 H
+* ^From:.*
+Recipe_1
+
+
+
+## Recipe_2:
+##
+## This recipe will only be invoked if the subject line
+## constains the string 'sports' This email will go into
+## your mailbox for the special account.  You need to
+## replace the 'your_special_account_name' string with what
+## applies to you
+##
+:0
+* ^Subject:.*(College|Safe|career|diploma|professional|Degree|Masters|bu([a-z]?)y|Graduate|PhD|MBA|College|free|professional|office|affordable|cheap|expertise|promotion|job|depression|accredited|Hostway)
+
+Recipe_2
+
+## Recipe_3:
+##
+## This is an emailing recipe.  It will send to your regular
+## Purdue webmail account all messages that originate from
+## the purdue.edu domain and that have survived the previous
+## recipes.
+##
+##
+## IMPORTANT NOTE: The email address in the last line of the
+## recipe is your Purdue webmail address --- the address on
+## which you normally receive your email DO NOT put your
+## special account name in that line since that would create
+## an infinite loop.
+##
+0: 
+*(GOLD|GEMSTONE|Vegas-style|celebrate|Roulette|Poker|casino)
+Recipe_3
+
+## Recipe_4:
+##
+## This is one of the recipes in your instructor's spam
+## filter. If your drug related spam does not originate from
+## Purdue, this recipe will kick in.  
+##
+## IMPORTANT: Since spammers fake their headers, a spam
+## message actually coming from outside Purdue may still
+## look like it is coming from Purdue.
+##
+0:
+* ^Content-Type: text/plain
+* ^Content-Type: text/html
+* ^Content-Type: multipart/alternative
+Recipe_4
+
+
+## Recipe_5:
+##
+## This is another recipe from your instructor's spam filter
+
+
+
+## Recipe_6:
+## 
+## The rest of the email to your special account will be 
+## deposited in the file spamFolder
+##
+
+
